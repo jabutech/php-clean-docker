@@ -1,0 +1,29 @@
+# Docker Compose version
+version: "3"
+
+# network docker untuk menghubungkan antar container
+networks:
+  php:
+
+# service yang digunakan aplikasi
+services:
+  php:
+    # ketika php dijalankan, jalankan/build perintah dari dockerfile
+    build:
+      context: .
+      # docker file
+      dockerfile: Dockerfile
+    # nama container
+    container_name: belajar-php
+    # Restart container when the app crash, not when container is stop
+    restart: unless-stopped
+    # root folder untuk mengakses kedalam mysql docker
+    volumes:
+      - ./src:/var/www/html
+      # Handle file size upload
+      # - ./php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    # port php
+    ports:
+      - "9001:9000"
+    networks:
+      - php
